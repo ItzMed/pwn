@@ -151,9 +151,10 @@ let's make sure that local_58 is the place where we are going to inject our shel
     gets(local_58);
 ```
 Now that we are sure we are going to inject our shellcode into local_58 and then return to force the program to execute the shellcode stored in local_58.
-### lets' explain more how we are going to build our exploit : 
-#### first step 
-
+### lets' explain more how we are going to build our payload : 
+payload = shell_code + offset + return_address_to_our_shell_code
+here the trick is that the offset is not from the local_58 until the return address it's from the shell_code until we reach ret address so the offset = local_58_offset - len(shell_code)
+let me explain more : 
 
 
 
