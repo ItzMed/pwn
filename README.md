@@ -116,3 +116,46 @@ checksec escape_the_jail
     PIE:      PIE enabled
     RWX:      Has RWX segments
 ```
+Here, the buffer overflow protection is disabled, and NX (which prevents malicious code execution in the stack) is also disabled. In our case, we can execute shellcode and perform a buffer overflow attack. However, we have a minor issue: the addresses are not static, so each time the program executes, the addresses, such as function addresses and variable addresses, will change.
+Now let's move on to the next step, which is reversing the binary and checking for vulnerabilities :
+```C
+  puts("--1 => Help Omran : ");
+  puts("--2 => Give up on Omran : ");
+  fgets(local_e,2,stdin);
+  if (local_e[0] == '1') {
+    puts("sorry, bro you have to enter the jail to help me :/ ");
+    printf("But Omran left you this : %p \n",local_58);
+    puts("Does this look helpful for breaking into the jail? : ");
+    do {
+      local_c = getchar();
+      if (local_c == 10) break;
+    } while (local_c != -1);
+    gets(local_58);
+  }
+  else if (local_e[0] == '2') {
+    puts("I\'m disappointed bro , Anyway I expected that you could do it ");
+    puts("Good bye!!!!!");
+  }
+```
+here is the interseting part the first fgets() he is asking the user to choose to help omran or to give up on him , when you choof to help omran you will find some intersting informations that you have to enter the jail to help omran and in this function  :
+```C
+    printf("But Omran left you this : %p \n",local_58);
+``` 
+He is printing back the address of local_58 in the shellcode attack  , this returned address can be interesting , it means that we are going to insert our code in this place and then force the program to jump to that address to execute the shellcode.
+let's make sure that local_58 is the place where we are going to inject our shell into it : 
+```C
+    do {
+      local_c = getchar();
+      if (local_c == 10) break;
+    } while (local_c != -1);
+    gets(local_58);
+```
+Now that we are sure we are going to inject our shellcode into local_58 and then return to force the program to execute the shellcode stored in local_58.
+### lets' explain more how we are going to build our exploit : 
+#### first step 
+
+
+
+
+
+
